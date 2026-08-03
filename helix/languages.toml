@@ -1,0 +1,137 @@
+[language-server.gopls.config]
+"ui.diagnostic.staticcheck" = true
+
+
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+[[language]]
+name = "javascript"
+language-servers = [
+  "biome",
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+]
+auto-format = true
+formatter = { command = "biome", args = [
+  "check",
+  "--write",
+  "--stdin-file-path",
+  "%{buffer_name}",
+] }
+
+[[language]]
+name = "typescript"
+language-servers = [
+  "biome",
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+]
+auto-format = true
+formatter = { command = "biome", args = [
+  "check",
+  "--write",
+  "--stdin-file-path",
+  "%{buffer_name}",
+] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+language-servers = [
+  "biome",
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "tailwindcss-ls",
+]
+formatter = { command = "biome", args = [
+  "check",
+  "--write",
+  "--stdin-file-path",
+  "%{buffer_name}",
+] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+language-servers = [
+  "biome",
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "tailwindcss-ls",
+]
+formatter = { command = "biome", args = [
+  "check",
+  "--write",
+  "--stdin-file-path",
+  "%{buffer_name}",
+] }
+
+[[language]]
+name = "json"
+language-servers = [
+  "biome",
+  { name = "vscode-json-language-server", except-features = [
+    "format",
+  ] },
+]
+auto-format = true
+formatter = { command = "biome", args = [
+  "check",
+  "--write",
+  "--stdin-file-path",
+  "%{buffer_name}",
+] }
+
+[[language]]
+name = "html"
+language-servers = ["vscode-html-language-server", "tailwindcss-ls"]
+
+[[language]]
+name = "css"
+scope = "source.css"
+file-types = ["css", "postcss"]
+language-servers = [
+  { name = "vscode-css-language-server", except-features = [
+    "diagnostics",
+  ] },
+  "tailwindcss-ls",
+]
+
+[[language]]
+name = "rust"
+scope = "source.rust"
+injection-regex = "rust"
+file-types = ["rs"]
+roots = [
+    "Cargo.toml",
+    "Cargo.lock",
+]
+auto-format = true
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = ["rust-analyzer"]
+
+indent = {tab-width = 4,unit = "    "}
+
+[language-server.rust-analyzer.config]
+cargo.features = "all"
+check.command = "clippy"
+procMacro.enable = true
+cargo.buildScripts.enable = true
+
+[[language]]
+name = "toml"
+language-servers = ["tombi"]
+auto-format = true
+formatter = { command = "tombi", args = ["format", "-"] }
+
+[[language]]
+name = "yaml"
+language-servers = ["yaml-language-server"]
+auto-format = true
+formatter = { command = "yamlfmt", args = ["-"] }
