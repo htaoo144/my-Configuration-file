@@ -115,14 +115,34 @@ roots = [
 auto-format = true
 block-comment-tokens = { start = "/*", end = "*/" }
 language-servers = ["rust-analyzer"]
+formatter = { command = "rustfmt", args = ["--edition", "2021"] }
 
 indent = {tab-width = 4,unit = "    "}
 
 [language-server.rust-analyzer.config]
-cargo.features = "all"
 check.command = "clippy"
+check.workspace = true
 procMacro.enable = true
 cargo.buildScripts.enable = true
+
+# inlay hints: RustRover-style
+inlayHints.typeHints.enable = true
+inlayHints.parameterHints.enable = true
+inlayHints.chainingHints.enable = true
+inlayHints.expressionAdjustmentHints.enable = "never"
+inlayHints.closingBraceHints.enable = false
+
+# imports: merge into crate-level groups like RustRover
+imports.granularity.group = "crate"
+
+# completion: postfix + autoimport like RustRover
+completion.postfix.enable = true
+completion.autoimport.enable = true
+
+typing.autoClosingAngleBrackets.enable = true
+
+# code lens: run/debug buttons and usage counts
+lens.enable = true
 
 [[language]]
 name = "toml"
